@@ -1,26 +1,105 @@
-# Lumen PHP Framework
+# Task Management API Documentation
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+## Overview
+This API allows users to perform basic CRUD (Create, Read, Update, Delete) operations on tasks. It includes filters for task status and due date, as well as search functionality. The API is built using Lumen and uses PostgreSQL for data storage.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Features:
+- Create a task
+- Retrieve all tasks (with optional filters and search)
+- Retrieve a specific task by ID
+- Update a task
+- Delete a task
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+## Endpoints:
 
-## Official Documentation
+### 1. Create a Task
+- **Endpoint:** `POST /api/tasks`
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+- **Request Body (JSON):**
+    ```json
+    {
+        "title": "Complete API",
+        "description": "Build the task management API",
+        "due_date": "2024-12-31"
+    }
+    ```
 
-## Contributing
+### 2. Get All Tasks
+- **Endpoint:** `GET /api/tasks`
+- **Optional Query Parameters:**
+  - `status` (pending, completed)
+  - `due_date` (YYYY-MM-DD format)
+  - `search` (search by part of the task title)
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Example Request:**
+    ```bash
+    GET /api/tasks?status=pending&due_date=2024-12-31&search=API
+    ```
 
-## Security Vulnerabilities
+### 3. Get a Specific Task
+- **Endpoint:** `GET /api/tasks/{id}`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- **Example Request:**
+    ```bash
+    GET /api/tasks/1
+    ```
 
-## License
+### 4. Update a Task
+- **Endpoint:** `PUT /api/tasks/{id}`
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Request Body (JSON):**
+    ```json
+    {
+        "title": "Update API Documentation",
+        "description": "Add task filtering and search documentation",
+        "status": "completed",
+        "due_date": "2024-12-31"
+    }
+    ```
+
+### 5. Delete a Task
+- **Endpoint:** `DELETE /api/tasks/{id}`
+
+- **Example Request:**
+    ```bash
+    DELETE /api/tasks/1
+    ```
+
+## Setting Up the API from GitHub
+
+### 1. Clone the Repository
+First, clone the repository from GitHub:
+```bash
+git clone https://github.com/paolosiroko/task-manager-api.git
+cd task-management-api
+
+
+
+## 2. Install Dependencies
+
+Install all the necessary dependencies using Composer:
+
+composer install
+### 3. Set Up Environment Variables
+Create a .env file by copying the .env.example:
+
+cp .env.example .env
+Then, configure the database connection for PostgreSQL in the .env file:
+
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=task_manager
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+### 4. Run Migrations
+Run the migrations to create the necessary tables in the PostgreSQL database:
+
+
+php artisan migrate
+###  5. Run the API Server
+Start the Lumen API server:
+
+php -S localhost:8800 -t public
+### Your API will now be accessible at http://localhost:8800/api.
